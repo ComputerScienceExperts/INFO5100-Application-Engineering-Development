@@ -1,6 +1,13 @@
 
 package com.ump;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+
+
 
 
 public class Main extends javax.swing.JFrame {
@@ -8,7 +15,63 @@ public class Main extends javax.swing.JFrame {
     
     public Main() {
         initComponents();
+        departmentcombo();
+        rolecombo();
         
+    }
+    
+    String driver = "com.mysql.cj.jdbc.Driver";
+    String url = "jdbc:mysql://localhost:3306/studentdatabase?zeroDateTimeBehavior=convertToNull";
+    String username = "root";
+    String password = "root";
+    
+    Statement st;
+    ResultSet rs;
+    
+    
+    
+    
+    private void departmentcombo(){
+         try {
+            Class.forName(driver);
+            Connection con = DriverManager.getConnection(url, username, password);
+            String str = "SELECT * FROM role";
+             try {
+                  st = con.createStatement();
+                  rs = st.executeQuery(str);
+                  while(rs.next()){
+                  role_name.addItem(rs.getString("role_name"));
+                  }
+             } catch (Exception e) {
+             }
+           
+           //jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+           JOptionPane.showMessageDialog(this,"all Select Department");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,e.getMessage());
+        }
+    }
+    
+    
+    private void rolecombo(){
+         try {
+            Class.forName(driver);
+            Connection con = DriverManager.getConnection(url, username, password);
+            String str = "SELECT * FROM department";
+             try {
+                  st = con.createStatement();
+                  rs = st.executeQuery(str);
+                  while(rs.next()){
+                  department_name.addItem(rs.getString("department_name"));
+                  }
+             } catch (Exception e) {
+             }
+           
+           //jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+           JOptionPane.showMessageDialog(this,"all Select Department");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,e.getMessage());
+        }
     }
 
     
@@ -16,19 +79,18 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox<>();
+        department_name = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        role_name = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MCA", "B-Tech", "MBA", "M-Tech" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        department_name.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        department_name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                department_nameActionPerformed(evt);
             }
         });
 
@@ -38,11 +100,10 @@ public class Main extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Role");
 
-        jComboBox2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Admin", "SuperAdmin", "Dean", "Tutor" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        role_name.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        role_name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                role_nameActionPerformed(evt);
             }
         });
 
@@ -62,8 +123,8 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(106, 106, 106)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox2, 0, 117, Short.MAX_VALUE)))
+                            .addComponent(department_name, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(role_name, 0, 117, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(159, 159, 159)
                         .addComponent(jButton1)))
@@ -74,12 +135,12 @@ public class Main extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(82, 82, 82)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(department_name, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(role_name, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(68, 68, 68))
@@ -89,15 +150,20 @@ public class Main extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void department_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_department_nameActionPerformed
+        
+         
         
         
         
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_department_nameActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void role_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_role_nameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+        
+        
+        
+    }//GEN-LAST:event_role_nameActionPerformed
 
    
     
@@ -134,10 +200,10 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> department_name;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JComboBox<String> role_name;
     // End of variables declaration//GEN-END:variables
 }
