@@ -86,6 +86,7 @@ public class Main extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(40, 240, 24));
 
         department_name.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         department_name.addActionListener(new java.awt.event.ActionListener() {
@@ -107,8 +108,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setBackground(new java.awt.Color(40, 40, 40));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton1.setText("Show");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -164,6 +171,15 @@ public class Main extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_role_nameActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        Tutor tu = new Tutor();
+        tu.setVisible(rootPaneCheckingEnabled);
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
    
     
